@@ -1,0 +1,1022 @@
+<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Prep Master - Speaking Practice</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('dashboard')">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
+                <i class="fa-solid fa-graduation-cap text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-base tracking-tight leading-none bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">English Prep Master</h1>
+                <span class="text-xs text-slate-400 dark:text-slate-500 font-semibold">IELTS Speaking Practice Suite</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <!-- PROFILE BADGE DISPLAY -->
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold">
+                <i class="fa-solid fa-user-tie text-emerald-500"></i>
+                <span id="header-profile-label">Hồ sơ: Điều dưỡng</span>
+            </div>
+
+            <!-- DARK MODE TOGGLE -->
+            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer">
+                <i id="theme-icon" class="fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8">
+
+        <!-- VIEW: DASHBOARD -->
+        <div id="view-dashboard" class="space-y-6 animate-fadeIn max-w-5xl mx-auto mt-2">
+            
+            <div class="text-center space-y-2 mb-8">
+                <h2 class="text-2xl sm:text-3xl font-black tracking-tight dark:text-white">Danh Mục 5 Đề Ôn Tập Speaking</h2>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium mb-4">
+                    Chọn một đề thi bên dưới để bắt đầu luyện tập đầy đủ các phần tương ứng.
+                </p>
+
+                <!-- PROFILE SWITCHER FOR DASHBOARD -->
+                <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mt-4 border border-slate-200 dark:border-slate-700">
+                    <button onclick="switchProfile('nurse')" id="prof-nurse" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-emerald-500 text-white shadow-md cursor-pointer">Hồ sơ: Điều dưỡng</button>
+                    <button onclick="switchProfile('pediatrician')" id="prof-pediatrician" class="px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">Hồ sơ: Bác sĩ Nhi khoa</button>
+                </div>
+            </div>
+
+            <!-- GRID 5 ĐỀ SPEAKING -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="dashboard-tests-grid">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- VIEW: QUIZ WORKSPACE -->
+        <div id="view-quiz" class="hidden space-y-6 animate-fadeIn">
+            
+            <!-- QUIZ TOP BAR / HEADER -->
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div id="quiz-icon-box" class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="test-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300">ĐỀ 1</span>
+                            <span id="quiz-theme" class="text-xs font-semibold text-slate-400 dark:text-slate-500">Chủ đề: Hometown</span>
+                        </div>
+                        <h2 id="quiz-title" class="text-lg sm:text-xl font-black tracking-tight mt-0.5 dark:text-white">Hometown & Reading Habits</h2>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 w-full sm:w-auto justify-between">
+                    <!-- TABS: PART 1, 2, 3 -->
+                    <div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl" id="quiz-tabs-container">
+                        <!-- Render dynamically by JS -->
+                    </div>
+
+                    <button onclick="openExitModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold transition-all cursor-pointer">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Thoát
+                    </button>
+                </div>
+            </div>
+
+            <!-- MAIN WORKSPACE GRID -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- LEFT COLUMN: QUESTION CONTENT & PRACTICE -->
+                <div class="lg:col-span-8 space-y-5" id="quiz-main-content">
+                    <!-- Render dynamically by active part -->
+                </div>
+
+                <!-- RIGHT COLUMN: TEST NAVIGATION & PROGRESS -->
+                <div class="lg:col-span-4 space-y-5">
+                    
+                    <!-- PROGRESS CARD -->
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-extrabold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400">Tiến độ bài thi</h3>
+                            <span id="stat-completed-count" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/40 px-2 py-0.5 rounded-lg">0/5</span>
+                        </div>
+                        <div class="w-full bg-slate-100 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                            <div id="stat-progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- OTHER TESTS QUICK SWITCH -->
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 shadow-sm space-y-3">
+                        <h3 class="font-extrabold text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400">Chuyển nhanh đề khác</h3>
+                        <div class="space-y-2" id="sidebar-tests-list">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- EXIT CONFIRMATION MODAL -->
+    <div id="exit-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-700 animate-fadeIn">
+            <div class="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 flex items-center justify-center font-bold text-xl mx-auto">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="text-center space-y-1">
+                <h3 class="text-lg font-black dark:text-white">Xác nhận thoát?</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Bạn có chắc chắn muốn quay về trang chủ không?</p>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeExitModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs hover:bg-slate-200 dark:hover:bg-slate-600 transition-all cursor-pointer">Ở lại</button>
+                <button onclick="confirmExit()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/30 cursor-pointer">Về trang chủ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // 1. DATA BANK - 2 BỘ HỒ SƠ (ĐIỀU DƯỠNG & BÁC SĨ NHI KHOA)
+        // ============================================================================
+        const dataSets = {
+            nurse: {
+                de1: {
+                    id: "de1", label: "Đề 1", title: "Hometown & Reading Habits", theme: "Chủ đề: Hometown, Favorite Newspaper & Reading Impacts", icon: "fa-city", badgeColor: "emerald",
+                    part1: [
+                        { id: "n_d1_p1_q1", question: "Where is your hometown?", vietnamese: "Quê hương bạn ở đâu?", sampleAnswer: "My hometown is Ho Chi Minh City, in the south of Vietnam. It is the largest city in the country. It is very crowded and modern, with many tall buildings, shopping centers, and restaurants. One of the most famous places is Nguyen Hue Walking Street. Many local people and tourists visit this place every day. I like my hometown because it is convenient and has many opportunities for work and study.", vocab: [{word: "crowded", meaning: "đông đúc"}, {word: "modern", meaning: "hiện đại"}, {word: "convenient", meaning: "thuận tiện"}, {word: "opportunity", meaning: "cơ hội"}] },
+                        { id: "n_d1_p1_q2", question: "What can visitors do in your hometown?", vietnamese: "Du khách có thể làm gì ở quê bạn?", sampleAnswer: "Visitors can do many interesting things in my hometown. They can visit Nguyen Hue Walking Street, Ben Thanh Market, and many beautiful cafés. They can also enjoy delicious local food and go shopping. At night, the city is very lively with colorful lights and many activities. I think visitors will have a wonderful experience in Ho Chi Minh City.", vocab: [{word: "local food", meaning: "món ăn địa phương"}, {word: "lively", meaning: "nhộn nhịp"}, {word: "experience", meaning: "trải nghiệm"}] }
+                    ],
+                    part2: {
+                        id: "n_d1_p2", topic: "Describe a newspaper or magazine you enjoy reading.", vietnamese: "Mô tả một tờ báo hoặc tạp chí bạn thích đọc.",
+                        bullets: ["What kind of newspaper or magazine it is", "Which parts of it you read", "When and where you read it", "And explain why you enjoy reading it"],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I would like to talk about Tuoi Tre Online, which is my favorite online newspaper.\n\nI usually read the health section because I am interested in medical news and healthy lifestyles. I work as a nurse at Binh Chanh Hospital, so reading health articles helps me improve my knowledge and keep up with new information.\n\nI often read this newspaper on my phone when I have free time, especially during lunch breaks or after work. I usually spend about five minutes reading one or two articles.\n\nI enjoy reading Tuoi Tre Online because the articles are easy to understand and very useful. I can learn about nutrition, disease prevention, and healthcare. Sometimes I also share useful information with my family and friends.\n\nReading this newspaper has become one of my daily habits. It helps me become a better nurse and take better care of my patients.",
+                        vocab: [{word: "health section", meaning: "chuyên mục sức khỏe"}, {word: "nutrition", meaning: "dinh dưỡng"}, {word: "disease prevention", meaning: "phòng bệnh"}, {word: "improve knowledge", meaning: "nâng cao kiến thức"}, {word: "daily habit", meaning: "thói quen hằng ngày"}]
+                    },
+                    part3: [
+                        { id: "n_d1_p3_q1", question: "How does reading affect people?", vietnamese: "Việc đọc ảnh hưởng đến mọi người như thế nào?", sampleAnswer: "I think reading has many benefits. It helps people learn new knowledge and improve their vocabulary. Reading can also reduce stress and help people relax. For me, reading health articles helps me improve my nursing knowledge and provide better care for my patients.", vocab: [{word: "benefit", meaning: "lợi ích"}, {word: "reduce stress", meaning: "giảm căng thẳng"}] },
+                        { id: "n_d1_p3_q2", question: "Do you prefer reading printed copies or digital versions? Why?", vietnamese: "Bạn thích đọc báo giấy hay bản điện tử hơn? Tại sao?", sampleAnswer: "I prefer digital versions because they are more convenient. I can read them on my phone anytime and anywhere. It is also easy to search for information and save interesting articles. Printed newspapers are still good, but I don't read them very often.", vocab: [{word: "digital version", meaning: "phiên bản điện tử"}, {word: "convenient", meaning: "tiện lợi"}] },
+                        { id: "n_d1_p3_q3", question: "Will newspapers and magazines disappear because of the internet?", vietnamese: "Báo giấy và tạp chí có biến mất vì internet không?", sampleAnswer: "I don't think they will disappear completely. Some people still enjoy reading printed newspapers and magazines. However, I believe online newspapers will become more popular because they are faster, easier to use, and updated every day.", vocab: [{word: "disappear", meaning: "biến mất"}, {word: "popular", meaning: "phổ biến"}, {word: "updated", meaning: "được cập nhật"}] }
+                    ]
+                },
+                de2: {
+                    id: "de2", label: "Đề 2", title: "Leisure Time & Family", theme: "Chủ đề: Spare time activities, Family relationships", icon: "fa-users", badgeColor: "blue",
+                    part1: [
+                        { id: "n_d2_p1_q1", question: "What do you do in your spare time?", vietnamese: "Bạn làm gì vào thời gian rảnh?", sampleAnswer: "In my spare time, I usually grow plants, read medical documents, or play badminton. Sometimes I go to the beach with my family. These activities help me relax after work. I enjoy growing plants the most because it makes me feel peaceful and happy.", vocab: [{word: "spare time", meaning: "thời gian rảnh"}, {word: "grow plants", meaning: "trồng cây"}, {word: "peaceful", meaning: "yên bình"}] },
+                        { id: "n_d2_p1_q2", question: "How do you usually spend your weekends?", vietnamese: "Bạn thường dành cuối tuần như thế nào?", sampleAnswer: "I usually spend my weekends with my family. Sometimes we go to the beach, have meals together, or visit some interesting places. If I stay at home, I read medical books or take care of my plants. I enjoy weekends because I can relax and spend quality time with my family.", vocab: [{word: "quality time", meaning: "thời gian ý nghĩa (bên nhau)"}] }
+                    ],
+                    part2: {
+                        id: "n_d2_p2", topic: "Describe your family.", vietnamese: "Mô tả gia đình của bạn.",
+                        bullets: ["How many family members you have", "What they do", "What they are like", "And explain how close you are with your family members."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I would like to talk about my family.\n\nThere are seven people in my family. They are my father, my mother, two older brothers, two older sisters, and me. I am one of five children. My oldest brother is a construction worker. He is hardworking and independent. My older sister is a civil servant. She is calm and friendly. My younger sister is a pediatrician. She is honest and caring. My younger brother is an elevator technician. He is quiet and helpful. I work as a nurse at Binh Chanh Hospital.\n\nWe are very close and always help each other whenever someone has a problem. We often have meals together and talk about our work and daily life.\n\nOne of my favorite memories is celebrating my mother's birthday at a vegetarian restaurant. We had delicious food, talked happily, and took many family photos.\n\nI think my family is the most important part of my life because they always encourage me and support me in everything I do.",
+                        vocab: [{word: "civil servant", meaning: "công chức"}, {word: "pediatrician", meaning: "bác sĩ nhi khoa"}, {word: "elevator technician", meaning: "kỹ thuật viên thang máy"}, {word: "caring", meaning: "biết quan tâm"}, {word: "encourage", meaning: "động viên"}]
+                    },
+                    part3: [
+                        { id: "n_d2_p3_q1", question: "Is family important in your country?", vietnamese: "Gia đình có quan trọng ở đất nước bạn không?", sampleAnswer: "Yes, family is very important in Vietnam. Most people have a close relationship with their family members. Parents take care of their children, and children respect and support their parents. I think family gives us love, happiness, and strength.", vocab: [{word: "relationship", meaning: "mối quan hệ"}, {word: "respect", meaning: "tôn trọng"}] },
+                        { id: "n_d2_p3_q2", question: "How are families different now compared to 30 years ago?", vietnamese: "Gia đình hiện nay khác biệt thế nào so với 30 năm trước?", sampleAnswer: "I think families today are smaller than they were in the past. Many young people move to big cities for work or study, so they do not live with their parents. People are also busier now, so they sometimes have less time to be together.", vocab: [{word: "together", meaning: "cùng nhau"}] },
+                        { id: "n_d2_p3_q3", question: "Who should take care of old people, families or the government?", vietnamese: "Ai nên chăm sóc người cao tuổi, gia đình hay chính phủ?", sampleAnswer: "In my opinion, both families and the government should take care of old people. Family members can give them love and emotional support, while the government can provide healthcare and financial support. I think both are equally important.", vocab: [{word: "emotional support", meaning: "hỗ trợ tinh thần"}, {word: "financial support", meaning: "hỗ trợ tài chính"}] }
+                    ]
+                },
+                de3: {
+                    id: "de3", label: "Đề 3", title: "Food & Special Occasions", theme: "Chủ đề: Traditional food, Memorable achievements & Festivals", icon: "fa-bowl-food", badgeColor: "orange",
+                    part1: [
+                        { id: "n_d3_p1_q1", question: "What are some traditional foods in your country?", vietnamese: "Một số món ăn truyền thống ở nước bạn là gì?", sampleAnswer: "Vietnam has many delicious traditional foods. Some famous dishes are pho, banh mi, spring rolls, and beef stew. My favorite dish is beef stew because it is very delicious and nutritious. It has tender beef, vegetables, and a rich soup. I enjoy eating it with bread or noodles.", vocab: [{word: "beef stew", meaning: "bò kho"}, {word: "nutritious", meaning: "bổ dưỡng"}, {word: "tender", meaning: "mềm"}] },
+                        { id: "n_d3_p1_q2", question: "What do you think of fast food?", vietnamese: "Bạn nghĩ gì về đồ ăn nhanh?", sampleAnswer: "I rarely eat fast food. If I have a chance, I usually choose fried chicken. It is tasty and convenient, but I know it is not very healthy. I prefer home-cooked meals because they are fresher and more nutritious.", vocab: [{word: "fried chicken", meaning: "gà rán"}, {word: "home-cooked meal", meaning: "bữa ăn nấu tại nhà"}] }
+                    ],
+                    part2: {
+                        id: "n_d3_p2", topic: "Describe a special occasion in your life.", vietnamese: "Mô tả một dịp đặc biệt trong đời bạn.",
+                        bullets: ["Where this occasion took place", "When it took place", "Who was there", "And describe how you felt on this occasion."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I would like to talk about one of the most special occasions in my life. It was the day I passed the Master's program in Nursing.\n\nIt happened in Ho Chi Minh City after a long period of hard work. At that time, I was working as a nurse while preparing for the entrance exam. During the day, I worked at the hospital, and in the evening, I spent many hours studying. Sometimes I felt tired and under a lot of pressure, but I never gave up.\n\nWhen I received the good news, my family was very happy. My friends and colleagues also congratulated me. Their support gave me more confidence.\n\nI felt proud because all my hard work finally paid off. This achievement reminded me that perseverance is very important. It also encouraged me to continue learning so that I can provide better care for my patients in the future.\n\nI will always remember this special occasion because it changed my career and made me a more confident nurse.",
+                        vocab: [{word: "master's program", meaning: "chương trình thạc sĩ"}, {word: "perseverance", meaning: "sự kiên trì"}, {word: "achievement", meaning: "thành tựu"}, {word: "colleague", meaning: "đồng nghiệp"}]
+                    },
+                    part3: [
+                        { id: "n_d3_p3_q1", question: "What is an important festival in your country?", vietnamese: "Một lễ hội quan trọng ở nước bạn là gì?", sampleAnswer: "Tet Holiday is the most important festival in Vietnam. It is a time when family members come back home to celebrate together. People clean their houses, prepare traditional food, and visit relatives. Everyone hopes for good luck, good health, and happiness in the new year.", vocab: [{word: "celebrate", meaning: "tổ chức/ăn mừng"}, {word: "relative", meaning: "họ hàng"}] },
+                        { id: "n_d3_p3_q2", question: "What are your favorite parts of this festival?", vietnamese: "Bạn thích phần nào nhất của lễ hội này?", sampleAnswer: "My favorite part is spending time with my family. We have delicious meals together, visit our relatives, and give each other good wishes. I also enjoy eating traditional food and relaxing after a busy year at work.", vocab: [{word: "good wishes", meaning: "lời chúc tốt đẹp"}] },
+                        { id: "n_d3_p3_q3", question: "How are weddings different now in your country?", vietnamese: "Đám cưới hiện nay khác biệt như thế nào?", sampleAnswer: "Weddings today are more modern than before. Many couples celebrate their weddings in hotels or restaurants instead of at home. They also invite more guests and hire photographers to capture beautiful memories. However, traditional customs are still an important part of Vietnamese weddings.", vocab: [{word: "photographer", meaning: "nhiếp ảnh gia"}, {word: "custom", meaning: "phong tục"}] }
+                    ]
+                },
+                de4: {
+                    id: "de4", label: "Đề 4", title: "City Life (Part 3 Only)", theme: "Chủ đề: Living in big cities, Facilities & Environment", icon: "fa-building", badgeColor: "teal",
+                    part1: [], part2: null,
+                    part3: [
+                        { id: "n_d4_p3_q1", question: "Why do some young people like to live in cities?", vietnamese: "Tại sao một số người trẻ thích sống ở thành phố?", sampleAnswer: "I think many young people like to live in cities because there are more job opportunities and better education. Cities also have many hospitals, shopping malls, restaurants, and entertainment places. They can meet new people and learn new skills. Although cities are crowded, they offer more chances for a better future.", vocab: [{word: "job opportunity", meaning: "cơ hội việc làm"}, {word: "education", meaning: "giáo dục"}] },
+                        { id: "n_d4_p3_q2", question: "Which facilities are most important to people living in cities?", vietnamese: "Những cơ sở vật chất nào quan trọng nhất với người sống ở thành phố?", sampleAnswer: "I think hospitals, schools, and public transportation are the most important facilities. Hospitals provide good healthcare, schools offer better education, and public transportation makes traveling easier. Parks are also important because people need places to relax and exercise after work.", vocab: [{word: "public transportation", meaning: "phương tiện giao thông công cộng"}, {word: "healthcare", meaning: "chăm sóc sức khỏe"}] },
+                        { id: "n_d4_p3_q3", question: "Do you want to live in a big city with good pay but bad air?", vietnamese: "Bạn có muốn sống ở thành phố lớn lương cao nhưng không khí tệ không?", sampleAnswer: "Not really. I prefer living in a quiet suburban area. A big city may offer a higher salary, but clean air and good health are more important to me. As a nurse, I know that air pollution can affect people's health. I would rather have a peaceful life with a healthy environment.", vocab: [{word: "suburban area", meaning: "khu vực vùng ven"}, {word: "air pollution", meaning: "ô nhiễm không khí"}] }
+                    ]
+                },
+                de5: {
+                    id: "de5", label: "Đề 5", title: "Family & Interesting City", theme: "Chủ đề: Family lifestyle & Memorable trips", icon: "fa-plane-departure", badgeColor: "rose",
+                    part1: [
+                        { id: "n_d5_p1_q1", question: "Do you have a large family?", vietnamese: "Bạn có một gia đình lớn không?", sampleAnswer: "Yes, I do. There are seven people in my family. They are my parents, two older brothers, two older sisters, and me. We have different jobs, but we are very close. We always help and support each other whenever someone has a problem.", vocab: [{word: "support", meaning: "hỗ trợ"}, {word: "close", meaning: "gắn bó"}] },
+                        { id: "n_d5_p1_q2", question: "Do you live with your family?", vietnamese: "Bạn có sống cùng gia đình không?", sampleAnswer: "I live in Ho Chi Minh City because of my work. My parents live in Binh Chanh District. I visit them whenever I have free time. We often have meals together and talk about our work and daily life. I always feel happy when I am with my family.", vocab: [{word: "daily life", meaning: "cuộc sống hằng ngày"}] }
+                    ],
+                    part2: {
+                        id: "n_d5_p2", topic: "Describe an interesting city you know and like.", vietnamese: "Mô tả một thành phố thú vị mà bạn biết.",
+                        bullets: ["Where it is", "How you went there", "What you did there", "And explain why you found it so interesting."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I would like to talk about Da Nang, one of the most beautiful cities in Vietnam.\n\nIt is located in central Vietnam. I visited Da Nang with my family during a summer holiday. We traveled there by plane because it was fast and convenient.\n\nDuring the trip, we visited many famous places such as My Khe Beach, Ba Na Hills, and Dragon Bridge. We also enjoyed fresh seafood and walked along the beach in the evening. The weather was sunny, and the air was fresh.\n\nI found Da Nang very interesting because it is clean, modern, and peaceful. The people were friendly, and the food was delicious. After busy days working at Binh Chanh Hospital, this trip helped me relax and spend quality time with my family.\n\nI hope I can visit Da Nang again in the future because it is one of my favorite cities in Vietnam.",
+                        vocab: [{word: "central Vietnam", meaning: "miền Trung Việt Nam"}, {word: "seafood", meaning: "hải sản"}, {word: "fresh air", meaning: "không khí trong lành"}, {word: "peaceful", meaning: "yên bình"}]
+                    },
+                    part3: []
+                }
+            },
+            
+            pediatrician: {
+                de1: {
+                    id: "de1", label: "Đề 1", title: "Hometown & Reading Habits", theme: "Chủ đề: Hometown, Favorite Newspaper & Reading Impacts", icon: "fa-city", badgeColor: "emerald",
+                    part1: [
+                        { id: "p_d1_p1_q1", question: "Where is your hometown?", vietnamese: "Quê hương bạn ở đâu?", sampleAnswer: "My hometown is Ho Chi Minh City, in the south of Vietnam. It is the largest city in the country. It is very crowded and modern, with many tall buildings, shopping malls, and restaurants. One of the most famous places is Nguyen Hue Walking Street. Many local people and tourists visit this place every day. I enjoy living here because everything is convenient and there are many job opportunities.", vocab: [{word: "shopping mall", meaning: "trung tâm thương mại"}, {word: "famous", meaning: "nổi tiếng"}] },
+                        { id: "p_d1_p1_q2", question: "What can visitors do in your hometown?", vietnamese: "Du khách có thể làm gì ở quê bạn?", sampleAnswer: "Visitors can do many interesting things in my hometown. They can walk along Nguyen Hue Walking Street, visit Ben Thanh Market, and enjoy many kinds of local food. They can also go shopping or take photos of beautiful buildings. At night, the city is very lively with many lights and activities. I think visitors will have a good time here.", vocab: [{word: "local food", meaning: "món ăn địa phương"}, {word: "lively", meaning: "nhộn nhịp"}] }
+                    ],
+                    part2: {
+                        id: "p_d1_p2", topic: "Describe a newspaper or magazine you enjoy reading.", vietnamese: "Mô tả một tờ báo hoặc tạp chí bạn thích đọc.",
+                        bullets: ["What kind of newspaper or magazine it is", "Which parts of it you read", "When and where you read it", "And explain why you enjoy reading it"],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I enjoy reading Tuoi Tre Online, especially the health section. It is an online newspaper, so I usually read it on my phone. I often read it when I have some free time at work or at home. I usually spend about five minutes reading one or two articles.\n\nI like reading this newspaper because I work as a pediatrician at a hospital in Ho Chi Minh City. The health articles help me learn more about nutrition, healthy lifestyles, and new medical information. Sometimes I also read news about education and society, but the health section is my favorite.\n\nI think reading this newspaper is a good habit because it helps me relax and improve my knowledge at the same time. It is easy to read, free, and updated every day, so I enjoy reading it whenever I have time.",
+                        vocab: [{word: "healthy lifestyle", meaning: "lối sống lành mạnh"}, {word: "medical information", meaning: "thông tin y tế"}, {word: "habit", meaning: "thói quen"}]
+                    },
+                    part3: [
+                        { id: "p_d1_p3_q1", question: "How does reading affect people?", vietnamese: "Việc đọc ảnh hưởng đến mọi người như thế nào?", sampleAnswer: "I think reading has many benefits. It helps people learn new knowledge and improve their vocabulary. Reading can also help people relax after work or study. For me, reading health articles is useful because it helps me improve my medical knowledge and do my job better.", vocab: [{word: "improve", meaning: "cải thiện"}, {word: "knowledge", meaning: "kiến thức"}] },
+                        { id: "p_d1_p3_q2", question: "Do you prefer reading printed copies or digital versions? Why?", vietnamese: "Bạn thích đọc báo giấy hay bản điện tử hơn? Tại sao?", sampleAnswer: "I prefer digital versions because they are more convenient. I can read them on my phone anytime and anywhere. They are also easy to search and usually free. Printed books are nice, but I don't carry them very often.", vocab: [{word: "digital version", meaning: "phiên bản điện tử"}, {word: "printed copy", meaning: "bản in"}] },
+                        { id: "p_d1_p3_q3", question: "Will newspapers and magazines disappear because of the internet?", vietnamese: "Báo giấy và tạp chí có biến mất vì internet không?", sampleAnswer: "I don't think they will disappear completely. Many people still enjoy reading printed newspapers and magazines. However, I believe online newspapers will become more popular because they are faster, cheaper, and easier to access.", vocab: [{word: "disappear", meaning: "biến mất"}, {word: "access", meaning: "truy cập"}] }
+                    ]
+                },
+                de2: {
+                    id: "de2", label: "Đề 2", title: "Leisure Time & Family", theme: "Chủ đề: Spare time activities, Family relationships", icon: "fa-users", badgeColor: "blue",
+                    part1: [
+                        { id: "p_d2_p1_q1", question: "What do you do in your spare time?", vietnamese: "Bạn làm gì vào thời gian rảnh?", sampleAnswer: "In my spare time, I usually grow plants, read medical documents, or play badminton. Sometimes I go to the beach with my family. These activities help me relax after work. I enjoy growing plants the most because it makes me feel peaceful and happy.", vocab: [{word: "spare time", meaning: "thời gian rảnh"}, {word: "medical documents", meaning: "tài liệu y khoa"}] },
+                        { id: "p_d2_p1_q2", question: "How do you usually spend your weekends?", vietnamese: "Bạn thường dành cuối tuần như thế nào?", sampleAnswer: "I usually spend my weekends with my family. Sometimes we go to the beach, have meals together, or visit some interesting places. If I stay at home, I read medical documents or take care of my plants. I enjoy weekends because I can relax and spend time with my family.", vocab: [{word: "enjoyable", meaning: "thú vị"}] }
+                    ],
+                    part2: {
+                        id: "p_d2_p2", topic: "Describe your family.", vietnamese: "Mô tả gia đình của bạn.",
+                        bullets: ["How many family members you have", "What they do", "What they are like", "And explain how close you are with your family members."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I have a big family with seven people. There are my father, my mother, two older brothers, two older sisters, and me. I am the youngest child in my family.\n\nMy oldest brother is a construction worker. He is independent and hardworking. My second sister is a civil servant. She is calm and friendly. My third sister is a nurse. She is active and caring. My younger brother is an elevator technician. He is quiet and easy-going. I work as a pediatrician at a hospital in Ho Chi Minh City.\n\nWe are very close to each other. We always help and support our family members whenever someone has a problem. One of my favorite memories is celebrating my mother's birthday at a vegetarian restaurant. We had a wonderful dinner together, talked a lot, and took many photos. It was a simple but very happy day.\n\nI think my family is the most important part of my life because everyone loves and cares for each other.",
+                        vocab: [{word: "construction worker", meaning: "công nhân xây dựng"}, {word: "independent", meaning: "tự lập"}, {word: "active", meaning: "năng động"}, {word: "memorable", meaning: "đáng nhớ"}]
+                    },
+                    part3: [
+                        { id: "p_d2_p3_q1", question: "Is family important in your country?", vietnamese: "Gia đình có quan trọng ở đất nước bạn không?", sampleAnswer: "Yes, family is very important in Vietnam. Most people spend a lot of time with their families. Parents take care of their children, and children respect and support their parents. I think family gives us love, care, and encouragement throughout our lives.", vocab: [{word: "respect", meaning: "tôn trọng"}, {word: "encourage", meaning: "động viên"}] },
+                        { id: "p_d2_p3_q2", question: "How are families different now compared to 30 years ago?", vietnamese: "Gia đình hiện nay khác biệt thế nào so với 30 năm trước?", sampleAnswer: "I think families are smaller now than in the past. Many young people move to big cities for work or study, so they do not live with their parents. People are also busier because of work, so they sometimes spend less time together.", vocab: [{word: "busy", meaning: "bận rộn"}] },
+                        { id: "p_d2_p3_q3", question: "Who should take care of old people, families or the government?", vietnamese: "Ai nên chăm sóc người cao tuổi, gia đình hay chính phủ?", sampleAnswer: "I think both families and the government should help. Family members should take care of their parents because they know them best and can give them love and support. The government should provide good healthcare and financial support for elderly people.", vocab: [{word: "elderly people", meaning: "người cao tuổi"}, {word: "responsibility", meaning: "trách nhiệm"}] }
+                    ]
+                },
+                de3: {
+                    id: "de3", label: "Đề 3", title: "Food & Special Occasions", theme: "Chủ đề: Traditional food, Memorable achievements & Festivals", icon: "fa-bowl-food", badgeColor: "orange",
+                    part1: [
+                        { id: "p_d3_p1_q1", question: "What are some traditional foods in your country?", vietnamese: "Một số món ăn truyền thống ở nước bạn là gì?", sampleAnswer: "Vietnam has many delicious traditional foods. Some famous dishes are pho, banh mi, spring rolls, and beef stew. My favorite dish is beef stew because it is very delicious and nutritious. It has tender beef, vegetables, and a rich soup. I enjoy eating it with bread or noodles.", vocab: [{word: "beef stew", meaning: "bò kho"}, {word: "soup", meaning: "nước dùng"}] },
+                        { id: "p_d3_p1_q2", question: "What do you think of fast food?", vietnamese: "Bạn nghĩ gì về đồ ăn nhanh?", sampleAnswer: "I rarely eat fast food. If I have a chance, I usually choose fried chicken. It is tasty and convenient, but I know it is not very healthy. I prefer home-cooked meals because they are fresher and more nutritious.", vocab: [{word: "home-cooked meal", meaning: "bữa ăn nấu tại nhà"}, {word: "healthy", meaning: "tốt cho sức khỏe"}] }
+                    ],
+                    part2: {
+                        id: "p_d3_p2", topic: "Describe a special occasion in your life.", vietnamese: "Mô tả một dịp đặc biệt trong đời bạn.",
+                        bullets: ["Where this occasion took place", "When it took place", "Who was there", "And describe how you felt on this occasion."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "One of the most special occasions in my life was passing the entrance exam to Pham Ngoc Thach University of Medicine in 2008.\n\nIt happened after my second attempt. I failed the first exam, so I decided to study much harder. Every day, I traveled a long distance by bus to attend extra classes. It took a lot of time and effort.\n\nAt that time, my family had financial difficulties, so I felt a lot of pressure. I knew that getting into medical school was very important for my future and for my family.\n\nWhen I received the result, I was extremely happy and proud. My parents were also very happy because all my hard work finally paid off.\n\nI will never forget that day because it changed my life. It was the beginning of my dream to become a pediatrician, and now I am working at a hospital in Ho Chi Minh City.",
+                        vocab: [{word: "entrance exam", meaning: "kỳ thi tuyển sinh"}, {word: "medical school", meaning: "trường y"}, {word: "financial difficulties", meaning: "khó khăn tài chính"}, {word: "proud", meaning: "tự hào"}]
+                    },
+                    part3: [
+                        { id: "p_d3_p3_q1", question: "What is an important festival in your country?", vietnamese: "Một lễ hội quan trọng ở nước bạn là gì?", sampleAnswer: "Tet Holiday is the most important festival in Vietnam. It is the Lunar New Year, and people spend time with their families. They clean their houses, cook traditional food, and visit relatives. It is a time for new beginnings and happiness.", vocab: [{word: "Lunar New Year", meaning: "Tết âm lịch"}, {word: "relatives", meaning: "họ hàng"}] },
+                        { id: "p_d3_p3_q2", question: "What are your favorite parts of this festival?", vietnamese: "Bạn thích phần nào nhất của lễ hội này?", sampleAnswer: "My favorite part is having meals with my family. We also visit our relatives and wish each other good luck and good health. I enjoy eating traditional food and spending time with everyone because we are usually very busy during the year.", vocab: [{word: "good luck", meaning: "may mắn"}] },
+                        { id: "p_d3_p3_q3", question: "How are weddings different now in your country?", vietnamese: "Đám cưới hiện nay khác biệt như thế nào?", sampleAnswer: "Weddings today are more modern than before. Many couples celebrate their weddings in hotels or restaurants instead of at home. They also invite more guests and hire photographers and videographers to record the special day. However, traditional customs are still important in many families.", vocab: [{word: "videographer", meaning: "người quay phim"}, {word: "custom", meaning: "phong tục"}] }
+                    ]
+                },
+                de4: {
+                    id: "de4", label: "Đề 4", title: "City Life (Part 3 Only)", theme: "Chủ đề: Living in big cities, Facilities & Environment", icon: "fa-building", badgeColor: "teal",
+                    part1: [], part2: null,
+                    part3: [
+                        { id: "p_d4_p3_q1", question: "Why do some young people like to live in cities?", vietnamese: "Tại sao một số người trẻ thích sống ở thành phố?", sampleAnswer: "I think many young people like living in cities because there are more job opportunities and better schools. Cities also have shopping malls, hospitals, restaurants, and many entertainment places. Young people can meet new friends and learn new skills. Although cities are crowded, they offer more chances for personal and career development.", vocab: [{word: "entertainment", meaning: "giải trí"}, {word: "quality of life", meaning: "chất lượng cuộc sống"}] },
+                        { id: "p_d4_p3_q2", question: "Which facilities are most important to people living in cities?", vietnamese: "Những cơ sở vật chất nào quan trọng nhất với người sống ở thành phố?", sampleAnswer: "I think hospitals, schools, and public transportation are the most important facilities. Good hospitals help people stay healthy, and good schools provide better education. Public transportation also makes traveling easier and reduces traffic problems. Parks are important too because people need places to relax and exercise.", vocab: [{word: "traffic", meaning: "giao thông"}, {word: "hospital", meaning: "bệnh viện"}] },
+                        { id: "p_d4_p3_q3", question: "Do you want to live in a big city with good pay but bad air?", vietnamese: "Bạn có muốn sống ở thành phố lớn lương cao nhưng không khí tệ không?", sampleAnswer: "Personally, I prefer living in a quiet suburban area. A big city may offer a higher salary, but clean air and good health are more important to me. After a busy day at work, I want to go home to a peaceful place with less noise and traffic. I think a healthy environment can improve our quality of life.", vocab: [{word: "suburban area", meaning: "khu vực vùng ven"}, {word: "salary", meaning: "mức lương"}] }
+                    ]
+                },
+                de5: {
+                    id: "de5", label: "Đề 5", title: "Family & Interesting City", theme: "Chủ đề: Family lifestyle & Memorable trips", icon: "fa-plane-departure", badgeColor: "rose",
+                    part1: [
+                        { id: "p_d5_p1_q1", question: "Do you have a large family?", vietnamese: "Bạn có một gia đình lớn không?", sampleAnswer: "Yes, I do. There are seven people in my family. They are my parents, two older brothers, two older sisters, and me. We have different jobs, but we are very close. We always help and support each other whenever someone has a problem.", vocab: [{word: "support", meaning: "hỗ trợ"}, {word: "close", meaning: "gắn bó"}] },
+                        { id: "p_d5_p1_q2", question: "Do you live with your family?", vietnamese: "Bạn có sống cùng gia đình không?", sampleAnswer: "I live in Ho Chi Minh City because of my work. My parents live in Binh Chanh District. I visit them whenever I have free time. We often have meals together and talk about our work and daily life. I always feel happy when I am with my family.", vocab: [{word: "free time", meaning: "thời gian rảnh"}] }
+                    ],
+                    part2: {
+                        id: "p_d5_p2", topic: "Describe an interesting city you know and like.", vietnamese: "Mô tả một thành phố thú vị mà bạn biết.",
+                        bullets: ["Where it is", "How you went there", "What you did there", "And explain why you found it so interesting."],
+                        prepTime: 60, speakTime: 120,
+                        sampleAnswer: "I would like to talk about Da Nang, one of the most beautiful cities in Vietnam.\n\nIt is located in central Vietnam. I visited Da Nang with my family during a summer holiday. We traveled there by plane because it was fast and convenient.\n\nDuring the trip, we visited many famous places such as My Khe Beach, Ba Na Hills, and Dragon Bridge. We also enjoyed fresh seafood and walked along the beach in the evening. The weather was sunny, and the air was fresh.\n\nI found Da Nang very interesting because it is clean, modern, and peaceful. The people were friendly, and the food was delicious. After busy days working at the hospital, this trip helped me relax and spend quality time with my family.\n\nI hope I can visit Da Nang again in the future because it is one of my favorite cities in Vietnam.",
+                        vocab: [{word: "holiday", meaning: "kỳ nghỉ"}, {word: "seafood", meaning: "hải sản"}, {word: "relax", meaning: "thư giãn"}]
+                    },
+                    part3: []
+                }
+            }
+        };
+
+        let speakingDataBank = dataSets.nurse;
+
+        // ============================================================================
+        // 2. APPLICATION STATE
+        // ============================================================================
+        const state = {
+            activeProfile: 'nurse',
+            darkMode: true,
+            activeView: 'dashboard',
+            activeTestId: 'de1',
+            activePart: 'part1',
+            completedQuestions: {}
+        };
+
+        // ============================================================================
+        // 3. HELPER UTILITIES
+        // ============================================================================
+        const getEl = (id) => document.getElementById(id);
+
+        function showToast(message, type = 'info') {
+            const container = getEl('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-emerald-600' : 'bg-slate-800 dark:bg-slate-700';
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-xl text-xs font-bold shadow-xl flex items-center gap-2.5 animate-fadeIn pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-emerald-400"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            const htmlEl = document.documentElement;
+            const themeIcon = getEl('theme-icon');
+            if (state.darkMode) {
+                htmlEl.classList.add('dark');
+                themeIcon.className = "fa-solid fa-sun";
+            } else {
+                htmlEl.classList.remove('dark');
+                themeIcon.className = "fa-solid fa-moon";
+            }
+        }
+
+        // ============================================================================
+        // 4. NAVIGATION
+        // ============================================================================
+        function switchProfile(profile) {
+            state.activeProfile = profile;
+            speakingDataBank = dataSets[profile];
+            
+            const btnNurse = getEl('prof-nurse');
+            const btnPed = getEl('prof-pediatrician');
+            const headerProfileLabel = getEl('header-profile-label');
+            
+            if (profile === 'nurse') {
+                btnNurse.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-emerald-500 text-white shadow-md cursor-pointer";
+                btnPed.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer";
+                if(headerProfileLabel) headerProfileLabel.innerText = "Hồ sơ: Điều dưỡng";
+            } else {
+                btnPed.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-emerald-500 text-white shadow-md cursor-pointer";
+                btnNurse.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer";
+                if(headerProfileLabel) headerProfileLabel.innerText = "Hồ sơ: Bác sĩ Nhi khoa";
+            }
+            
+            state.completedQuestions = {};
+            stopTimer();
+            if (state.activeView === 'dashboard') {
+                renderDashboard();
+            } else {
+                switchView('dashboard');
+            }
+            showToast(`Đã chuyển sang bộ câu hỏi: ${profile === 'nurse' ? 'Điều dưỡng' : 'Bác sĩ Nhi khoa'}`, 'success');
+        }
+
+        function switchView(view) {
+            if (typeof stopAllAudio === 'function') stopAllAudio();
+            state.activeView = view;
+            const dash = getEl('view-dashboard');
+            const quiz = getEl('view-quiz');
+            
+            if (view === 'dashboard') {
+                dash.classList.remove('hidden');
+                quiz.classList.add('hidden');
+                stopTimer();
+                renderDashboard();
+            } else {
+                dash.classList.add('hidden');
+                quiz.classList.remove('hidden');
+            }
+        }
+
+        // ============================================================================
+        // 5. TEST & PART WORKSPACE
+        // ============================================================================
+        function startTest(testId) {
+            if (!speakingDataBank[testId]) return;
+            state.activeTestId = testId;
+            stopTimer();
+
+            const t = speakingDataBank[testId];
+            getEl('test-badge').innerText = t.label.toUpperCase();
+            getEl('quiz-title').innerText = t.title;
+            getEl('quiz-theme').innerText = t.theme;
+            getEl('quiz-icon-box').innerHTML = `<i class="fa-solid ${t.icon}"></i>`;
+
+            const tabsContainer = getEl('quiz-tabs-container');
+            let tabsHtml = '';
+            let firstAvailablePart = null;
+
+            if (t.part1 && t.part1.length > 0) {
+                tabsHtml += `<button onclick="switchPart('part1')" id="tab-btn-part1" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">Part 1</button>`;
+                if (!firstAvailablePart) firstAvailablePart = 'part1';
+            }
+            if (t.part2) {
+                tabsHtml += `<button onclick="switchPart('part2')" id="tab-btn-part2" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">Part 2</button>`;
+                if (!firstAvailablePart) firstAvailablePart = 'part2';
+            }
+            if (t.part3 && t.part3.length > 0) {
+                tabsHtml += `<button onclick="switchPart('part3')" id="tab-btn-part3" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer">Part 3</button>`;
+                if (!firstAvailablePart) firstAvailablePart = 'part3';
+            }
+            tabsContainer.innerHTML = tabsHtml;
+
+            renderSidebarTestSwitcher();
+            switchPart(firstAvailablePart || 'part1');
+            switchView('quiz');
+        }
+
+        function switchPart(partKey) {
+            if (typeof stopAllAudio === 'function') stopAllAudio();
+            state.activePart = partKey;
+            
+            ['part1', 'part2', 'part3'].forEach(k => {
+                const btn = getEl(`tab-btn-${k}`);
+                if (btn) {
+                    btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
+                    btn.classList.add('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-200', 'dark:hover:bg-slate-700');
+                }
+            });
+
+            const activeBtn = getEl(`tab-btn-${partKey}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
+                activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-200', 'dark:hover:bg-slate-700');
+            }
+
+            renderCurrentPartContent();
+            updateProgressStats();
+        }
+
+        // ============================================================================
+        // 6. DASHBOARD & SIDEBAR RENDERERS
+        // ============================================================================
+        function renderDashboard() {
+            const grid = getEl('dashboard-tests-grid');
+            let html = '';
+
+            Object.values(speakingDataBank).forEach(t => {
+                let countQ = 0;
+                if (t.part1) countQ += t.part1.length;
+                if (t.part2) countQ += 1;
+                if (t.part3) countQ += t.part3.length;
+
+                html += `
+                    <div onclick="startTest('${t.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all cursor-pointer flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 rounded-xl text-xs font-extrabold uppercase bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400">
+                                    ${t.label}
+                                </span>
+                                <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 group-hover:bg-emerald-500 group-hover:text-white transition-all flex items-center justify-center text-slate-600 dark:text-slate-300">
+                                    <i class="fa-solid ${t.icon}"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-base sm:text-lg group-hover:text-emerald-600 transition-colors dark:text-white">${t.title}</h3>
+                                <p class="text-xs text-slate-400 dark:text-slate-500 font-medium mt-1 line-clamp-2">${t.theme}</p>
+                            </div>
+                        </div>
+                        <div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+                            <span><i class="fa-solid fa-list-check mr-1.5 text-emerald-500"></i> ${countQ} phần ôn tập</span>
+                            <span class="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">Bắt đầu <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function renderSidebarTestSwitcher() {
+            const list = getEl('sidebar-tests-list');
+            let html = '';
+
+            Object.values(speakingDataBank).forEach(t => {
+                const isActive = t.id === state.activeTestId;
+                const activeClass = isActive ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-slate-300';
+                
+                html += `
+                    <button onclick="startTest('${t.id}')" class="w-full text-left p-3 rounded-xl border ${activeClass} font-bold text-xs flex items-center justify-between transition-all cursor-pointer">
+                        <span class="truncate"><i class="fa-solid ${t.icon} mr-2 text-emerald-500"></i> ${t.label}: ${t.title}</span>
+                        ${isActive ? '<i class="fa-solid fa-check text-emerald-500"></i>' : ''}
+                    </button>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        // ============================================================================
+        // 7. CONTENT RENDERER (PART 1, 2, 3)
+        // ============================================================================
+        
+        function formatSampleAnswer(text) {
+            if (!text) return '';
+            return text
+                .replace(/,\s/g, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-0.5 opacity-70">/</span> ')
+                .replace(/\.\s/g, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-1 opacity-70">//</span> ')
+                .replace(/\.$/, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-1 opacity-70">//</span>')
+                .replace(/\n\n/g, '<br><br>');
+        }
+
+        function renderCurrentPartContent() {
+            const mainContainer = getEl('quiz-main-content');
+            const tData = speakingDataBank[state.activeTestId];
+            if (!tData) return;
+
+            if (state.activePart === 'part1') {
+                if (!tData.part1 || tData.part1.length === 0) {
+                    mainContainer.innerHTML = `<div class="bg-white dark:bg-slate-800 p-8 rounded-2xl text-center text-slate-400 font-bold text-sm">Đề này không có nội dung Part 1.</div>`;
+                    return;
+                }
+
+                let html = `<div class="space-y-4">
+                    <div class="bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800/50 p-4 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-extrabold text-sm text-emerald-800 dark:text-emerald-300">Part 1: Interview & Warm-up</h4>
+                            <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">Trả lời các câu hỏi ngắn về bản thân và các chủ đề quen thuộc.</p>
+                        </div>
+                        <span class="px-3 py-1 bg-emerald-600 text-white font-extrabold text-xs rounded-xl shadow-sm">${tData.part1.length} câu hỏi</span>
+                    </div>`;
+
+                const testNum = state.activeTestId.replace('de', '');
+                tData.part1.forEach((q, idx) => {
+                    const isCompleted = state.completedQuestions[q.id];
+                    const audioFilename = `D${testNum}_Part1_Audio${idx + 1}.mp3`;
+                    html += `
+                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 space-y-4 shadow-sm">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="space-y-1">
+                                    <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">Câu ${idx + 1}</span>
+                                    <h3 class="font-extrabold text-base text-slate-800 dark:text-white mt-1">${q.question}</h3>
+                                    <p class="text-xs font-medium text-slate-400 dark:text-slate-500 italic">(${q.vietnamese})</p>
+                                </div>
+                                <button onclick="toggleDone('${q.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200'}">
+                                    <i class="fa-solid fa-check"></i> ${isCompleted ? 'Đã ôn' : 'Đánh dấu'}
+                                </button>
+                            </div>
+
+                            <!-- Mẫu câu trả lời -->
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 space-y-3">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-lightbulb mr-1"></i> Câu trả lời mẫu (Sample Answer)</span>
+                                    <div class="flex items-center gap-1.5 p-1.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm w-fit">
+                                        <audio id="audio-${q.id}" src="audio/${audioFilename}" onended="resetAudioBtn('${q.id}')"></audio>
+                                        <select onchange="changeSpeed('${q.id}', this.value)" title="Tốc độ đọc" class="text-xs font-semibold bg-transparent px-1 py-1 text-slate-600 dark:text-slate-300 outline-none cursor-pointer">
+                                            <option value="1.0">1.0x</option>
+                                            <option value="0.8">0.8x</option>
+                                            <option value="0.6">0.6x</option>
+                                        </select>
+                                        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                                        <button id="btn-audio-${q.id}" onclick="toggleAudio('${q.id}')" title="Play/Pause" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-play" id="icon-audio-${q.id}"></i>
+                                        </button>
+                                        <button onclick="stopAudio('${q.id}')" title="Stop" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-stop"></i>
+                                        </button>
+                                        <button onclick="replayAudio('${q.id}')" title="Replay" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-rotate-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-base sm:text-lg text-slate-700 dark:text-slate-200 leading-loose font-medium">${formatSampleAnswer(q.sampleAnswer)}</p>
+                            </div>
+
+                            <!-- Từ vựng gợi ý -->
+                            ${q.vocab && q.vocab.length > 0 ? `
+                                <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                                    <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 mr-1"><i class="fa-solid fa-book-bookmark mr-1"></i> Từ vựng:</span>
+                                    ${q.vocab.map(v => `<span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold"><b>${v.word}</b> (${v.meaning})</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+                mainContainer.innerHTML = html;
+
+            } else if (state.activePart === 'part2') {
+                if (!tData.part2) {
+                    mainContainer.innerHTML = `<div class="bg-white dark:bg-slate-800 p-8 rounded-2xl text-center text-slate-400 font-bold text-sm">Đề này không có nội dung Part 2.</div>`;
+                    return;
+                }
+
+                const p2 = tData.part2;
+                const isCompleted = state.completedQuestions[p2.id];
+                const testNum = state.activeTestId.replace('de', '');
+                const audioFilename = `D${testNum}_Part2_Audio1.mp3`;
+
+                mainContainer.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/50 p-4 rounded-2xl flex items-center justify-between">
+                            <div>
+                                <h4 class="font-extrabold text-sm text-blue-800 dark:text-blue-300">Part 2: Individual Long Turn (Cue Card)</h4>
+                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">Nói liên tục trong 1-2 phút dựa trên các gợi ý đề bài.</p>
+                            </div>
+                            <button onclick="toggleDone('${p2.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${isCompleted ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'}">
+                                <i class="fa-solid fa-check"></i> ${isCompleted ? 'Đã ôn' : 'Đánh dấu hoàn thành'}
+                            </button>
+                        </div>
+
+                        <!-- CUE CARD BOX -->
+                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 space-y-5 shadow-sm">
+                            <div class="space-y-2 border-b border-slate-100 dark:border-slate-700 pb-4">
+                                <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full">Cue Card Chủ đề</span>
+                                <h3 class="font-black text-lg sm:text-xl text-slate-800 dark:text-white">${p2.topic}</h3>
+                                <p class="text-xs font-medium text-slate-400 dark:text-slate-500 italic">(${p2.vietnamese})</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <p class="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Bạn cần trình bày các ý sau:</p>
+                                <ul class="space-y-2">
+                                    ${p2.bullets.map(b => `<li class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2.5"><i class="fa-solid fa-circle-dot text-xs text-emerald-500"></i> ${b}</li>`).join('')}
+                                </ul>
+                            </div>
+
+                            <!-- TIMER WIDGET -->
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="text-center sm:text-left">
+                                    <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Đồng hồ luyện tập</span>
+                                    <span id="timer-display" class="text-2xl font-black text-slate-800 dark:text-white font-mono">01:00</span>
+                                    <span id="timer-status-label" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 ml-2">(Chuẩn bị 60 giây)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="startTimerSession(60)" class="px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition-all shadow-md cursor-pointer">
+                                        <i class="fa-solid fa-stopwatch mr-1"></i> Chuẩn bị (60s)
+                                    </button>
+                                    <button onclick="startTimerSession(120)" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-all shadow-md cursor-pointer">
+                                        <i class="fa-solid fa-microphone mr-1"></i> Nói (120s)
+                                    </button>
+                                    <button onclick="stopTimer()" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold hover:bg-slate-300 cursor-pointer">
+                                        <i class="fa-solid fa-stop"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- SAMPLE ANSWER -->
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 space-y-3">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-lightbulb mr-1"></i> Bài mẫu Part 2 (Sample Answer)</span>
+                                    <div class="flex items-center gap-1.5 p-1.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm w-fit">
+                                        <audio id="audio-${p2.id}" src="audio/${audioFilename}" onended="resetAudioBtn('${p2.id}')"></audio>
+                                        <select onchange="changeSpeed('${p2.id}', this.value)" title="Tốc độ đọc" class="text-xs font-semibold bg-transparent px-1 py-1 text-slate-600 dark:text-slate-300 outline-none cursor-pointer">
+                                            <option value="1.0">1.0x</option>
+                                            <option value="0.8">0.8x</option>
+                                            <option value="0.6">0.6x</option>
+                                        </select>
+                                        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                                        <button id="btn-audio-${p2.id}" onclick="toggleAudio('${p2.id}')" title="Play/Pause" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-play" id="icon-audio-${p2.id}"></i>
+                                        </button>
+                                        <button onclick="stopAudio('${p2.id}')" title="Stop" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-stop"></i>
+                                        </button>
+                                        <button onclick="replayAudio('${p2.id}')" title="Replay" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-rotate-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-base sm:text-lg text-slate-700 dark:text-slate-200 leading-loose font-medium">${formatSampleAnswer(p2.sampleAnswer)}</p>
+                            </div>
+
+                            <!-- VOCAB -->
+                            ${p2.vocab && p2.vocab.length > 0 ? `
+                                <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                                    <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 mr-1"><i class="fa-solid fa-book-bookmark mr-1"></i> Từ vựng:</span>
+                                    ${p2.vocab.map(v => `<span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold"><b>${v.word}</b> (${v.meaning})</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+            } else if (state.activePart === 'part3') {
+                if (!tData.part3 || tData.part3.length === 0) {
+                    mainContainer.innerHTML = `<div class="bg-white dark:bg-slate-800 p-8 rounded-2xl text-center text-slate-400 font-bold text-sm">Đề này không có nội dung Part 3.</div>`;
+                    return;
+                }
+
+                let html = `<div class="space-y-4">
+                    <div class="bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-800/50 p-4 rounded-2xl flex items-center justify-between">
+                        <div>
+                            <h4 class="font-extrabold text-sm text-purple-800 dark:text-purple-300">Part 3: Two-way Discussion</h4>
+                            <p class="text-xs text-purple-600 dark:text-purple-400 mt-0.5">Thảo luận các câu hỏi mở rộng chuyên sâu liên quan đến chủ đề.</p>
+                        </div>
+                        <span class="px-3 py-1 bg-purple-600 text-white font-extrabold text-xs rounded-xl shadow-sm">${tData.part3.length} câu hỏi</span>
+                    </div>`;
+
+                const testNum = state.activeTestId.replace('de', '');
+                tData.part3.forEach((q, idx) => {
+                    const isCompleted = state.completedQuestions[q.id];
+                    const audioFilename = `D${testNum}_Part3_Audio${idx + 1}.mp3`;
+                    html += `
+                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 space-y-4 shadow-sm">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="space-y-1">
+                                    <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">Câu hỏi ${idx + 1}</span>
+                                    <h3 class="font-extrabold text-base text-slate-800 dark:text-white mt-1">${q.question}</h3>
+                                    <p class="text-xs font-medium text-slate-400 dark:text-slate-500 italic">(${q.vietnamese})</p>
+                                </div>
+                                <button onclick="toggleDone('${q.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200'}">
+                                    <i class="fa-solid fa-check"></i> ${isCompleted ? 'Đã ôn' : 'Đánh dấu'}
+                                </button>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 space-y-3">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-lightbulb mr-1"></i> Gợi ý trả lời (Sample Answer)</span>
+                                    <div class="flex items-center gap-1.5 p-1.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm w-fit">
+                                        <audio id="audio-${q.id}" src="audio/${audioFilename}" onended="resetAudioBtn('${q.id}')"></audio>
+                                        <select onchange="changeSpeed('${q.id}', this.value)" title="Tốc độ đọc" class="text-xs font-semibold bg-transparent px-1 py-1 text-slate-600 dark:text-slate-300 outline-none cursor-pointer">
+                                            <option value="1.0">1.0x</option>
+                                            <option value="0.8">0.8x</option>
+                                            <option value="0.6">0.6x</option>
+                                        </select>
+                                        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                                        <button id="btn-audio-${q.id}" onclick="toggleAudio('${q.id}')" title="Play/Pause" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-play" id="icon-audio-${q.id}"></i>
+                                        </button>
+                                        <button onclick="stopAudio('${q.id}')" title="Stop" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-stop"></i>
+                                        </button>
+                                        <button onclick="replayAudio('${q.id}')" title="Replay" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm transition-all cursor-pointer">
+                                            <i class="fa-solid fa-rotate-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-base sm:text-lg text-slate-700 dark:text-slate-200 leading-loose font-medium">${formatSampleAnswer(q.sampleAnswer)}</p>
+                            </div>
+
+                            ${q.vocab && q.vocab.length > 0 ? `
+                                <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                                    <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 mr-1"><i class="fa-solid fa-book-bookmark mr-1"></i> Từ vựng:</span>
+                                    ${q.vocab.map(v => `<span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold"><b>${v.word}</b> (${v.meaning})</span>`).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+                mainContainer.innerHTML = html;
+            }
+        }
+
+        function toggleDone(id) {
+            if (state.completedQuestions[id]) {
+                delete state.completedQuestions[id];
+                showToast('Đã bỏ đánh dấu hoàn thành', 'info');
+            } else {
+                state.completedQuestions[id] = true;
+                showToast('Đã đánh dấu hoàn thành câu!', 'success');
+            }
+            renderCurrentPartContent();
+            updateProgressStats();
+        }
+
+        function updateProgressStats() {
+            const tData = speakingDataBank[state.activeTestId];
+            if (!tData) return;
+
+            let totalQuestions = 0;
+            let completedCount = 0;
+
+            if (tData.part1 && tData.part1.length > 0) {
+                totalQuestions += tData.part1.length;
+                tData.part1.forEach(q => { if (state.completedQuestions[q.id]) completedCount++; });
+            }
+            if (tData.part2) {
+                totalQuestions += 1;
+                if (state.completedQuestions[tData.part2.id]) completedCount++;
+            }
+            if (tData.part3 && tData.part3.length > 0) {
+                totalQuestions += tData.part3.length;
+                tData.part3.forEach(q => { if (state.completedQuestions[q.id]) completedCount++; });
+            }
+
+            const labelEl = getEl('stat-completed-count');
+            const barEl = getEl('stat-progress-bar');
+            
+            if (labelEl) labelEl.innerText = `${completedCount}/${totalQuestions || 1}`;
+            if (barEl) {
+                const percentage = totalQuestions ? Math.round((completedCount / totalQuestions) * 100) : 0;
+                barEl.style.width = `${percentage}%`;
+            }
+        }
+
+        // ============================================================================
+        // 8. TIMER UTILITIES
+        // ============================================================================
+        let timerInterval = null;
+
+        function startTimerSession(seconds) {
+            stopTimer();
+            let remaining = seconds;
+            
+            const display = getEl('timer-display');
+            const status = getEl('timer-status-label');
+            
+            if (status) {
+                status.innerText = seconds === 60 ? "(Chuẩn bị 60 giây)" : "(Nói 120 giây)";
+                status.classList.remove('text-slate-400', 'dark:text-slate-500');
+                status.classList.add('text-emerald-600', 'dark:text-emerald-400');
+            }
+            
+            const updateDisplay = () => {
+                if (!display) return;
+                const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+                const s = (remaining % 60).toString().padStart(2, '0');
+                display.innerText = `${m}:${s}`;
+            };
+            
+            updateDisplay();
+            
+            timerInterval = setInterval(() => {
+                remaining--;
+                if (remaining < 0) {
+                    stopTimer();
+                    showToast('Hết thời gian!', 'info');
+                    return;
+                }
+                updateDisplay();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            const display = getEl('timer-display');
+            const status = getEl('timer-status-label');
+            
+            if (display && display.innerText !== "01:00" && display.innerText !== "02:00") {
+                display.innerText = "00:00";
+            }
+            if (status) {
+                status.innerText = "(Đã dừng)";
+                status.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+                status.classList.add('text-slate-400', 'dark:text-slate-500');
+            }
+        }
+
+        // ============================================================================
+        // 9. AUDIO & MODALS
+        // ============================================================================
+        let currentAudioId = null;
+        let currentAudioEl = null;
+
+        function stopAllAudio() {
+            if (currentAudioEl) {
+                currentAudioEl.pause();
+                currentAudioEl.currentTime = 0;
+                if (currentAudioId) resetAudioBtn(currentAudioId);
+                currentAudioEl = null;
+                currentAudioId = null;
+            }
+        }
+
+        function toggleAudio(id) {
+            const audioEl = getEl(`audio-${id}`);
+            const btn = getEl(`btn-audio-${id}`);
+            const icon = getEl(`icon-audio-${id}`);
+
+            if (!audioEl) return;
+
+            if (currentAudioId && currentAudioId !== id) {
+                stopAllAudio();
+            }
+
+            if (audioEl.paused) {
+                audioEl.play().catch(e => {
+                    showToast('Chưa tìm thấy file audio: ' + audioEl.getAttribute('src'), 'info');
+                });
+                icon.className = "fa-solid fa-pause";
+                btn.classList.add('bg-emerald-500', 'text-white');
+                btn.classList.remove('bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/50', 'dark:text-emerald-300');
+                currentAudioId = id;
+                currentAudioEl = audioEl;
+            } else {
+                audioEl.pause();
+                resetAudioBtn(id);
+                currentAudioId = null;
+                currentAudioEl = null;
+            }
+        }
+
+        function changeSpeed(id, speed) {
+            const audioEl = getEl(`audio-${id}`);
+            if (audioEl) {
+                audioEl.playbackRate = parseFloat(speed);
+            }
+        }
+
+        function resetAudioBtn(id) {
+            const btn = getEl(`btn-audio-${id}`);
+            const icon = getEl(`icon-audio-${id}`);
+            if (btn && icon) {
+                icon.className = "fa-solid fa-play";
+                btn.classList.remove('bg-emerald-500', 'text-white');
+                btn.classList.add('bg-emerald-100', 'text-emerald-700', 'dark:bg-emerald-900/50', 'dark:text-emerald-300');
+            }
+        }
+
+        function stopAudio(id) {
+            const audioEl = getEl(`audio-${id}`);
+            if (audioEl) {
+                audioEl.pause();
+                audioEl.currentTime = 0;
+                resetAudioBtn(id);
+                if (currentAudioId === id) {
+                    currentAudioId = null;
+                    currentAudioEl = null;
+                }
+            }
+        }
+
+        function replayAudio(id) {
+            const audioEl = getEl(`audio-${id}`);
+            if (audioEl) {
+                audioEl.currentTime = 0;
+                if (audioEl.paused) {
+                    toggleAudio(id);
+                }
+            }
+        }
+
+        function openExitModal() {
+            getEl('exit-modal').classList.remove('hidden');
+        }
+
+        function closeExitModal() {
+            getEl('exit-modal').classList.add('hidden');
+        }
+
+        function confirmExit() {
+            closeExitModal();
+            switchView('dashboard');
+        }
+
+        // Khởi chạy ứng dụng khi tải trang
+        window.onload = function() {
+            renderDashboard();
+        };
+    </script>
+</body>
+</html>
