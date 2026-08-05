@@ -576,9 +576,9 @@
         function formatSampleAnswer(text) {
             if (!text) return '';
             return text
-                .replace(/,\s/g, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-0.5 opacity-70">/</span> ')
-                .replace(/\.\s/g, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-1 opacity-70">//</span> ')
-                .replace(/\.$/, ' <span class="text-emerald-500 dark:text-emerald-400 font-bold mx-1 opacity-70">//</span>')
+                .replace(/,\s/g, '<span class="text-red-500 dark:text-red-400 font-black text-2xl">,</span> ')
+                .replace(/\.\s/g, '<span class="text-red-500 dark:text-red-400 font-black text-2xl">.</span> ')
+                .replace(/\.$/, '<span class="text-red-500 dark:text-red-400 font-black text-2xl">.</span>')
                 .replace(/\n\n/g, '<br><br>');
         }
 
@@ -605,7 +605,7 @@
                 const testNum = state.activeTestId.replace('de', '');
                 tData.part1.forEach((q, idx) => {
                     const isCompleted = state.completedQuestions[q.id];
-                    const audioFilename = `D${testNum}_Part1_Audio${idx + 1}.mp3`;
+                    const audioFilename = `${state.activeProfile}_D${testNum}_Part1_Audio${idx + 1}.mp3`;
                     html += `
                         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 space-y-4 shadow-sm">
                             <div class="flex items-start justify-between gap-3">
@@ -668,7 +668,7 @@
                 const p2 = tData.part2;
                 const isCompleted = state.completedQuestions[p2.id];
                 const testNum = state.activeTestId.replace('de', '');
-                const audioFilename = `D${testNum}_Part2_Audio1.mp3`;
+                const audioFilename = `${state.activeProfile}_D${testNum}_Part2_Audio1.mp3`;
 
                 mainContainer.innerHTML = `
                     <div class="space-y-4">
@@ -772,7 +772,7 @@
                 const testNum = state.activeTestId.replace('de', '');
                 tData.part3.forEach((q, idx) => {
                     const isCompleted = state.completedQuestions[q.id];
-                    const audioFilename = `D${testNum}_Part3_Audio${idx + 1}.mp3`;
+                    const audioFilename = `${state.activeProfile}_D${testNum}_Part3_Audio${idx + 1}.mp3`;
                     html += `
                         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 space-y-4 shadow-sm">
                             <div class="flex items-start justify-between gap-3">
